@@ -1,0 +1,6 @@
+c:\users\derekp\documents\visual studio 2013\Projects\env-clean\env-clean\bin\Debug\env-clean.exe.config
+c:\users\derekp\documents\visual studio 2013\Projects\env-clean\env-clean\bin\Debug\env-clean.exe
+c:\users\derekp\documents\visual studio 2013\Projects\env-clean\env-clean\bin\Debug\env-clean.pdb
+c:\users\derekp\documents\visual studio 2013\Projects\env-clean\env-clean\obj\Debug\env-clean.csprojResolveAssemblyReference.cache
+c:\users\derekp\documents\visual studio 2013\Projects\env-clean\env-clean\obj\Debug\env-clean.exe
+c:\users\derekp\documents\visual studio 2013\Projects\env-clean\env-clean\obj\Debug\env-clean.pdb
