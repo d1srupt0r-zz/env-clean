@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace env_clean
 {
@@ -7,11 +8,26 @@ namespace env_clean
     {
         private static void Main(string[] args)
         {
-            var path = GetEnv();
+            var commands = args.Select((value, index) => new { value = args[index], index });
 
-            foreach (var p in path)
+            try
             {
-                Console.WriteLine(p);
+                // command parser
+                foreach (var cmd in commands)
+                {
+                    switch (cmd.value.ToLower())
+                    {
+                    }
+                }
+
+                foreach (var entry in GetEnv())
+                {
+                    Console.WriteLine(entry);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
 
