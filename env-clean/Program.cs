@@ -7,6 +7,27 @@ namespace env_clean
 {
     internal class Program
     {
+        private static IEnumerable<string> Duplicates(IEnumerable<string> first, ICollection<string> second)
+        {
+            return first.Where(item => !second.Contains(item));
+        }
+
+        private static IEnumerable<string> GetEnv(bool user)
+        {
+            return (Environment.GetEnvironmentVariable("Path", user ? EnvironmentVariableTarget.User : EnvironmentVariableTarget.Machine) ?? string.Empty).Split(';');
+        }
+
+        private static List<string> GetEnv(bool clean, bool user, bool find, string search)
+        {
+            var env = Duplicates(GetEnv(user), GetEnv(!user).ToList());
+
+            var list = clean ? env.Distinct().Where(Directory.Exists) : env;
+
+            return find
+                ? list.Where(item => item.ToLower().Contains(search.ToLower())).OrderBy(item => item).ToList()
+                : list.OrderBy(item => item).ToList();
+        }
+
         private static void Main(string[] args)
         {
             var search = string.Empty;
@@ -48,7 +69,7 @@ namespace env_clean
 
                 list.ForEach(Console.WriteLine);
 
-                Console.WriteLine("There are {0} items in the list", list.Count);
+                Console.WriteLine("# There are {0} items in {1}", list.Count, user ? "$env:path[user]" : "$env:path[machine]");
 
                 if (write)
                     WriteEnv(list, user);
@@ -66,17 +87,6 @@ namespace env_clean
                 Environment.SetEnvironmentVariable("Path", string.Join(";", list), user ? EnvironmentVariableTarget.User : EnvironmentVariableTarget.Machine);
             else
                 Console.WriteLine("Okay, nothing was written");
-        }
-
-        private static List<string> GetEnv(bool clean, bool user, bool find, string search)
-        {
-            var env = (Environment.GetEnvironmentVariable("Path", user ? EnvironmentVariableTarget.User : EnvironmentVariableTarget.Machine) ?? string.Empty).Split(';');
-
-            var list = clean ? env.Distinct().Where(Directory.Exists) : env;
-
-            return find
-                ? list.Where(item => item.Contains(search)).OrderBy(item => item).ToList()
-                : list.OrderBy(item => item).ToList();
         }
     }
 }
