@@ -31,7 +31,7 @@ namespace env_clean
         private static void Main(string[] args)
         {
             var search = string.Empty;
-            bool clean = false, find = false, user = false, write = false;
+            bool clean = false, verbose = false, find = false, user = false, write = false;
 
             try
             {
@@ -62,10 +62,15 @@ namespace env_clean
                             search = args[cmd.index + 1];
                             find = true;
                             break;
+
+                        case "/v":
+                        case "/verbose":
+                            verbose = true;
+                            break;
                     }
                 }
 
-                var list = GetEnv(clean, user, find, search);
+                var list = verbose ? GetEnv(user).ToList() : GetEnv(clean, user, find, search);
 
                 list.ForEach(Console.WriteLine);
 
